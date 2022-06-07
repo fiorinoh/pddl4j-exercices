@@ -1,9 +1,8 @@
-Template for the Read the Docs tutorial
-=======================================
+PDDL4J Exercices
+================
 
-This GitHub template includes fictional Python library
-with some basic Sphinx docs.
+This documentation provides exercises of increasing difficulty for an efficient use of the PDDL4J library.
 
-Read the tutorial here:
+Please read PDDL4J documentation here:
 
-https://docs.readthedocs.io/en/stable/tutorial/
+https://pddl4j.readthedocs.io/
