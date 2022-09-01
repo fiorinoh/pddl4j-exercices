@@ -1,22 +1,16 @@
-Welcome to Lumache's documentation!
-===================================
+.. PDDL4J Exercices documentation master file, created by
+   sphinx-quickstart on Wed Aug 31 11:07:43 2022.
+   You can adapt this file completely to your liking, but it should at least
+   contain the root `toctree` directive.
 
-**Lumache** (/lu'make/) is a Python library for cooks and food lovers
-that creates recipes mixing random ingredients.
-It pulls data from the `Open Food Facts database <https://world.openfoodfacts.org/>`_
-and offers a *simple* and *intuitive* API.
-
-Check out the :doc:`usage` section for further information, including
-how to :ref:`installation` the project.
-
-.. note::
-
-   This project is under active development.
-
-Contents
---------
+Welcome to PDDL4J Exercices's documentation!
+============================================
 
 .. toctree::
+   :maxdepth: 2
+   :caption: Contents:
 
-   usage
-   api
+   pddl_domain_problem_syntax
+   sokoban
+   sat_planning
+   monte_carlo_tree_search_planning
