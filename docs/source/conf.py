@@ -6,7 +6,7 @@
 # -- Project information -----------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
 
-project = 'PDDL4J Exercices'
+project = 'PDDL4J Exercises'
 copyright = '2022, Humbert Fiorino'
 author = 'Humbert Fiorino'
 release = '0.1'
