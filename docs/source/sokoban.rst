@@ -9,15 +9,18 @@ It has been shown that solving the levels of Sokoban is an NP-hard problem, in t
 or pull one or more objects at a time. The game is also of interest to artificial intelligence researchers, as solving levels poses difficult problems, for which no fast solving algorithms exist to date. 
 For example, work has shown that the general version of Sokoban is included in the space of PSPACE-complete problems.
 
+- Install the sokoban interface as indicated here_. Then launch a web navigator at http://localhost:8888/test.html. The above window should appear:
 
-# : mur
+.. image:: img/sokoban.png
 
-$ : caisse
+- Many different levels are provided at https://github.com/fiorinoh/sokoban/tree/master/config in files test*.json. Here is the meanings of the characters: \# is a wall, \$ is a box, \. is a destination, \* is a box on a storage place, \@ is the warehouse guard, \+ is this guard on a storage place and a space character is the floor.
+- The method Agent_ executes the plan encoded in the String solution as follows: U is up, D is down, L is left and R is right. 
+- Write a PDDL Sokoban domain and a Java program that:
 
-. : destination
+    - reads Sokoban levels and encode them as a PDDL problem,
+    - integrates a PDDL4J planner,
+    - solves the Sokoban level and executes the solution on the Sokoban interface.
 
-* : caisse sur une zone de rangement (pas présente dans ce niveau)
 
-@ : personnage
-
-+ : personnage sur une zone de rangement (pas présent dans ce niveau)
+.. _here: https://github.com/fiorinoh/sokoban
+.. _Agent: https://github.com/fiorinoh/sokoban/blob/master/src/main/java/sokoban/Agent.java

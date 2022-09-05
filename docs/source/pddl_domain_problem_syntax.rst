@@ -57,8 +57,8 @@ The N-puzzle is a classical problem for modelling algorithms involving heuristic
 Exercise 4: Graph coloring
 --------------------------
 
-In graph theory, colouring a graph means assigning a colour to each of its vertices so that two vertices connected by an edge are of different colours. 
-The aim is to use a minimum number of colours. A graph with a minimum of 2 colours has a *chromatic number* of 2.
+In graph theory, coloring a graph means assigning a color to each of its vertices so that two vertices connected by an edge are of different colors. 
+The aim is to use a minimum number of colors. A graph with a minimum of 2 colors has a *chromatic number* of 2.
 
 This figure is the map of Australia with its representation in the form of a graph. In this case, the color number is 3.
 
@@ -72,14 +72,37 @@ that of :math:`x_3` is :math:`\{a,b\}` and :math:`((x_1,x_3),\{(a,b),(b,a),(c,a)
 
 .. image:: img/csp.png
 
-- Code and test a planning domain to solve the colouring of a graph.
+- Code and test a planning domain to solve the coloring of a graph.
 
 
 Exercise 5: Pursuit-Evasion
 ---------------------------
 
-Exercise 6: Turing Machine
+The "Pursuit-Evasion" problem is a game played on a graph in which an intruder and pursuers are moving. 
+The objective of the pursuers is to capture the intruder. This is achieved when a pursuer and the intruder are on the same node.
+
+.. image:: img/pe.png
+
+The intruder moves at an infinite speed while the pursuers explore each node of the graph. The intruder can therefore place himself on nodes already explored by his pursuers (see figure). 
+A winning strategy for the pursuers consists in finding a displacement plan such that, whatever the movements of the intruder, he will eventually be captured. 
+It is easy to see that not all game configurations (graph and number of pursuers) have a winning strategy (see figure). The above figure gives an example of a winning strategy.
+
+.. image:: img/pe_solution.png
+
+- Code and test a planning domain to find a solution for a game of "Pursuit-Evasion".
+
+Exercise 6: Hamiltonian cycle
+-----------------------------
+In graph theory, a Hamiltonian graph is a graph with at least one cycle passing through all vertices one and only one time. Such an elementary cycle is then called a Hamiltonian cycle.
+
+.. image:: img/konigsberg.png
+
+- Represent in PDDL the initial state corresponding to the graph of the figure above (the city of Königsberg). Is there a Hamiltonian cycle?
+- Represent in PDDL the goal corresponding to the existence of a Hamiltonian cycle, whatever this graph is. In other words, the goal must not represent the solution of a given problem but a state representing the existence of a Hamiltonian cycle,
+- Represent in PDDL the actions necessary to find a Hamiltonian cycle.
+
+Exercise 7: Turing Machine
 --------------------------
 
-Exercise 7: SAT solver
+Exercise 8: SAT solver
 ----------------------
