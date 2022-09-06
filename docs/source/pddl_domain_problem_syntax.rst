@@ -104,5 +104,50 @@ In graph theory, a Hamiltonian graph is a graph with at least one cycle passing 
 Exercise 7: Turing Machine
 --------------------------
 
+A Turing Machine (TM) is a mathematical model of computation describing an abstract machine that manipulates symbols on a strip of tape according to a table of rules. 
+Despite the model's simplicity, it is capable of implementing any computer algorithm.
+
+The machine operates on an infinite memory tape divided into discrete cells, each of which can hold a single symbol drawn from a finite set of symbols called the alphabet of the machine. 
+It has a "head" that, at any point in the machine's operation, is positioned over one of these cells, and a "state" selected from a finite set of states. 
+At each step of its operation, the head reads the symbol in its cell. Then, based on the symbol and the machine's own present state, the machine writes a symbol into the same cell, and moves the head one step to the left or the right, or halts the computation. 
+The choice of which replacement symbol to write and which direction to move is based on a finite table that specifies what to do for each combination of the current state and the symbol that is read. (Wikipedia)
+
+More formally, :math:`\Gamma = \{s_0,s_1,\dots,s_n\}` is the finite set of symbols. The set of word on :math:`\Gamma` is noted :math:`\Gamma^{*}`. Usually, :math:`s_0` is the blank character :math:`\sqcup`. Initially, all the cells of the infinite memory tape are blank except a finite number.
+At a given time, the TM is in a state :math:`z_i` from a finite set :math:`Z = \{z_0,z_1,\dots,z_h\}`: :math:`z_0` is the initial state, and :math:`z_h` is the halt/final state. The transition function :math:`\delta` is as follows:
+
+.. math:: \delta : (Z - \{z_h\}) \times \Gamma \rightarrow Z \times \Gamma \times \{L, R, I\}
+
+:math:`\delta(z,s)=(z',s',L)` means that, if the MT is in the state *z* et reads symbol *s* then it shifts to state *z'*, write in the current cell *s'* instead of *s* and moves to the *L* eft cell (*R* for right and *I* for idle). Whenever the MT shifts to :math:`z_h`, the computation is over.
+A MT is totally defined by the tuple :math:`(\Gamma, Z, \delta, z_0, z_h)`.
+
+- Verify that the following MT computes *x + 1* when *x* is a binary number written on the memory tape:
+
+============== ======================== ================= =================
+:math:`\delta` | :math:`\sqcup`         :math:`0`         :math:`1`
+============== ======================== ================= =================
+:math:`z_0`    | :math:`(z_1,\sqcup,L)` :math:`(z_0,0,R)` :math:`(z_0,1,R)`
+:math:`z_1`    | :math:`(z_h,1,I)`      :math:`(z_h,1,I)` :math:`(z_1,0,L)`
+============== ======================== ================= =================
+
+- Write a PDDL domain and problem that emulates this MT by defining the actions as the transition function of the MT.
+- Write a PDDL domain that can emulate any MT. Test it by encoding the previous MT in the PDDL problem. 
+
 Exercise 8: SAT solver
 ----------------------
+
+Let :math:`x_i` represent propositional variables that can assume only values *true* or *false*. A *clause* is a disjunction of propositional variables or their negation: 
+
+.. math:: (x_1 \vee x_3 \vee \bar{x}_4)
+
+A formula in Conjunctive Normal Form (CNF) is a conjunction of clauses:
+
+.. math:: (x_1 \vee x_3 \vee \bar{x}_4)\wedge(x_4)\wedge(x_2 \vee \bar{x}_3)
+
+Given a formula in CNF, a SAT problem consists in finding whether there is an assignment of values to the propositional variables so that the formula evaluates to *true*. In the above example, a solution is :math:`x_1 = x_2 = x_4 = true`.
+
+It is worth noting that, if we assign the *true* value to a variable :math:`x_i`, all the clauses containing this variable can be removed from the SAT formula to solve, and :math:`\bar{x}_i` can be removed from the clauses containing it. Likewise, if we assign the *false* value to a variable :math:`\bar{x}_i`, all the clauses containing this variable can be removed from the SAT formula to solve, and :math:`x_i` can be removed from the clauses containing it. 
+
+This gives a procedure named David-Putnam to solve SAT formulas consisting in assigning values to the variables until no more clause is left in the SAT formula. The procedure fails if all the variables of a clause are removed.
+
+- Devise a PDDL domain allowing to solve SAT formulas based on this procedure.
+

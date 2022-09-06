@@ -17,7 +17,7 @@ For example, work has shown that the general version of Sokoban is included in t
 - The method Agent_ executes the plan encoded in the String solution as follows: U is up, D is down, L is left and R is right. 
 - Write a PDDL Sokoban domain and a Java program that:
 
-    - reads Sokoban levels and encode them as a PDDL problem,
+    - reads Sokoban levels and encodes them as a PDDL problem,
     - integrates a PDDL4J planner,
     - solves the Sokoban level and executes the solution on the Sokoban interface.
 

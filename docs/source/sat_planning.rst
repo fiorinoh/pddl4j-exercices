@@ -15,6 +15,106 @@ A formula in Conjunctive Normal Form (CNF) is a conjunction of clauses:
 
 Given a formula in CNF, a SAT problem consists in finding whether there is an assignment of values to the propositional variables so that the formula evaluates to *true*. In the above example, a solution is :math:`x_1 = x_2 = x_4 = true`.
 
+The question is then how to encode a planning problem as a SAT formula?
+
+Here is an illustration: the robot *R* has to move from room :math:`l_1` to room :math:`l_2`.
+
+.. image:: img/move.png
+
+- **Initial state**: 
+
+.. math:: s_0 \wedge \{\bigwedge_{f \notin s_0} \neg f\}
+
+that is, at step 0, the robot is in the first room and not in the second one:
+
+.. math:: at(R, l_1, 0) \wedge \neg at(R, l_2, 0)
+
+- **Goal**:
+
+.. math:: g \wedge \{\bigwedge_{f \notin g} \neg f\}
+
+that is, at step 1, the robot is in the second room and no more in the first one. SAT encoding hence implies to make an assumption on the length of the plan:
+
+.. math:: at(R, l_2, 1) \wedge \neg at(R, l_1, 1)
+
+- **Actions** at step *i*:
+
+.. math:: a_i \rightarrow \{\bigwedge \mathrm{precond}(a_i)\} \wedge \{\bigwedge \mathrm{effect}^{+}(a_i)\} \wedge \{\bigwedge \neg \mathrm{effect}^{-}(a_i)\}
+
+Remember that :math:`A \rightarrow B \equiv \neg A \vee B`:
+
+.. math:: MOVE(R, l_1, l_2, 0) \rightarrow at(R, l_1, 0) \wedge at(R, l_2, 1) \wedge \neg at(R, l_1, 1)
+.. math:: MOVE(R, l_2, l_1, 0) \rightarrow at(R, l_2, 0) \wedge at(R, l_1, 1) \wedge \neg at(R, l_2, 1)
+
+- **State transitions** at step *i*:
+
+.. math:: \neg f_i \wedge f_{i+1} \rightarrow \{\bigvee_{f_{i+1} \in \mathrm{effect}^{+}(a_i)}a_i\}
+.. math:: f_i \wedge \neg f_{i+1} \rightarrow \{\bigvee_{f_{i+1} \in \mathrm{effect}^{-}(a_i)}a_i\}
+
+.. math:: \neg at(R, l_1, 0) \wedge at(R, l_1, 1) \rightarrow MOVE(R, l_2, l_1, 0)
+.. math:: \neg at(R, l_2, 0) \wedge at(R, l_2, 1) \rightarrow MOVE(R, l_1, l_2, 0)
+.. math:: at(R, l_1, 0) \wedge \neg at(R, l_1, 1) \rightarrow MOVE(R, l_1, l_2, 0)
+.. math:: at(R, l_2, 0) \wedge \neg at(R, l_2, 1) \rightarrow MOVE(R, l_2, l_1, 0)
+
+
+- **Action disjunction**:
+
+.. math:: \neg a_i \vee \neg b_i
+
+.. math:: \neg MOVE(R, l_1, l_2, 0) \vee \neg MOVE(R, l_2, _1, 0)
+
+To summarize, the SAT formula is:
+
+.. math:: \neg MOVE(R, l_1, l_2, 0) \vee \neg MOVE(R, l_2, l_1, 0)
+.. math:: \neg at(R, l_1, 0) \wedge at(R, l_1, 1) \rightarrow MOVE(R, l_2, l_1, 0)
+.. math:: \neg at(R, l_2, 0) \wedge at(R, l_2, 1) \rightarrow MOVE(R, l_1, l_2, 0)
+.. math:: at(R, l_1, 0) \wedge \neg at(R, l_1, 1) \rightarrow MOVE(R, l_1, l_2, 0)
+.. math:: at(R, l_2, 0) \wedge \neg at(R, l_2, 1) \rightarrow MOVE(R, l_2, l_1, 0)
+.. math:: MOVE(R, l_1, l_2, 0) \rightarrow at(R, l_1, 0) \wedge at(R, l_2, 1) \wedge \neg at(R, l_1, 1)
+.. math:: MOVE(R, l_2, l_1, 0) \rightarrow at(R, l_2, 0) \wedge at(R, l_1, 1) \wedge \neg at(R, l_2, 1)
+.. math:: at(R, l_2, 1) \wedge \neg at(R, l_1, 1)
+.. math:: at(R, l_1, 0) \wedge \neg at(R, l_2, 0)
+
+Now, if we replace each proposition by a variable:
+
+.. math:: \neg a \vee \neg b
+.. math:: \neg c \wedge d \rightarrow b
+.. math:: \neg e \wedge f \rightarrow a
+.. math:: c \wedge \neg d \rightarrow a
+.. math:: e \wedge \neg f \rightarrow b
+.. math:: a \rightarrow c \wedge f \wedge \neg d
+.. math:: b \rightarrow e \wedge d \wedge \neg f
+.. math:: f \wedge \neg d
+.. math:: c \wedge \neg e
+
+And then put the formula in CNF:
+
+.. math:: \neg a \vee \neg b
+.. math:: c \vee \neg d \vee b
+.. math:: e \vee \neg f \vee a
+.. math:: \neg c \vee d \vee a
+.. math:: \neg e \vee f \vee b
+.. math:: \neg a \vee c
+.. math:: \neg a \vee f
+.. math:: \neg a \vee \neg d
+.. math:: \neg b \vee e
+.. math:: \neg b \vee d 
+.. math:: \neg b \vee \neg f
+.. math:: f
+.. math:: \neg d
+.. math:: c
+.. math:: \neg e
+
+After simplification, we obtain:
+
+.. math:: \neg a \vee \neg b
+.. math:: a
+.. math:: \neg b
+
+That is, the solution is *a*, which is:
+
+.. math:: MOVE(R, l_1, l_2, 0)
+
 
 Exercise 1: SAT planner
 -----------------------
